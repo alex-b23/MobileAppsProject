@@ -22,7 +22,7 @@ public class PostsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_posts);
 
         List<Post> posts = GetTestPosts();
-        RecyclerView recyclerView = findViewById(R.id.PostsRecyclerView);
+        RecyclerView recyclerView = findViewById(R.id.postsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         RecyclerViewAdapter = new PostAdapter(this, posts);
         recyclerView.setAdapter(RecyclerViewAdapter);
@@ -31,6 +31,13 @@ public class PostsActivity extends AppCompatActivity {
     private List<Post> GetTestPosts() {
         List<Post> posts = new ArrayList<Post>();
         posts.add(new Post("Derek Brandt", "derekjbr", "Hey guys I'm testing a new post!", 0));
+        posts.add(new Post("Derek Brandt", "derekjbr", "Hey guys I'm testing a another post!", 0));
+        posts.add(new Post("Derek Brandt", "derekjbr", "This post doesn't say much", 0));
+        posts.add(new Post("Derek Brandt", "derekjbr", "How is everyone feeling today?", 0));
+        posts.add(new Post("Derek Brandt", "derekjbr", "Hello world!", 0));
+        posts.add(new Post("Derek Brandt", "derekjbr", "This text might be a little long and I want to see how the card looks with different lengths of text.", 0));
+
+
         return posts;
     }
 }
