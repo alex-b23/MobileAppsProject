@@ -15,12 +15,12 @@ import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     LayoutInflater Inflator;
-    List<String> Usernames;
+    List<Post> Posts;
 
-    public PostAdapter(Context context, List<String> usernames)
+    public PostAdapter(Context context, List<Post> posts)
     {
         Inflator = LayoutInflater.from(context);
-        Usernames = usernames;
+        Posts = posts;
     }
     @NonNull
     @Override
@@ -31,22 +31,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
-        String username = Usernames.get(position);
-        holder.UserNameText.setText(username);
+        Post post = Posts.get(position);
+        holder.DisplayNameText.setText(post.DisplayName);
+        holder.UserNameText.setText("@" + post.Username);
+        holder.CaptionText.setText(post.Content);
     }
 
     @Override
     public int getItemCount() {
-        return Usernames.size();
+        return Posts.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
+        TextView DisplayNameText;
         TextView UserNameText;
+        TextView CaptionText;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            UserNameText = itemView.findViewById(R.id.postUserName);
+            DisplayNameText = itemView.findViewById(R.id.postCardDisplayName);
+            UserNameText = itemView.findViewById(R.id.postCardUsername);
+            CaptionText = itemView.findViewById(R.id.postCardCaption);
         }
     }
 }

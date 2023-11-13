@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.example.mobileappsproject.Posts.Post;
 import com.example.mobileappsproject.Posts.PostAdapter;
 
 import java.util.ArrayList;
@@ -20,51 +21,16 @@ public class PostsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posts);
 
-        List<String> usernames = GetTestUsernames();
+        List<Post> posts = GetTestPosts();
         RecyclerView recyclerView = findViewById(R.id.PostsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerViewAdapter = new PostAdapter(this, usernames);
+        RecyclerViewAdapter = new PostAdapter(this, posts);
         recyclerView.setAdapter(RecyclerViewAdapter);
     }
 
-    private List<String> GetTestUsernames() {
-        List<String> usernames = new ArrayList<String>();
-        usernames.add("user1");
-        usernames.add("user2");
-        usernames.add("user3");
-        usernames.add("user4");
-        usernames.add("user5");
-        usernames.add("user1");
-        usernames.add("user2");
-        usernames.add("user3");
-        usernames.add("user4");
-        usernames.add("user5");
-        usernames.add("user1");
-        usernames.add("user2");
-        usernames.add("user3");
-        usernames.add("user4");
-        usernames.add("user5");
-        usernames.add("user1");
-        usernames.add("user2");
-        usernames.add("user3");
-        usernames.add("user4");
-        usernames.add("user5");
-        usernames.add("user1");
-        usernames.add("user2");
-        usernames.add("user3");
-        usernames.add("user4");
-        usernames.add("user5");
-        usernames.add("user1");
-        usernames.add("user2");
-        usernames.add("user3");
-        usernames.add("user4");
-        usernames.add("user5");
-        usernames.add("user1");
-        usernames.add("user2");
-        usernames.add("user3");
-        usernames.add("user4");
-        usernames.add("user5");
-
-        return usernames;
+    private List<Post> GetTestPosts() {
+        List<Post> posts = new ArrayList<Post>();
+        posts.add(new Post("Derek Brandt", "derekjbr", "Hey guys I'm testing a new post!", 0));
+        return posts;
     }
 }
