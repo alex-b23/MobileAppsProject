@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_height="match_parent"
-    tools:context=".Login"
+    tools:context=".Registration"
     android:padding="20dp">
 
 
@@ -40,7 +40,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/loginBtn"
+        android:id="@+id/registrationBtn"
         android:layout_width="140dp"
         android:layout_height="63dp"
         android:layout_marginTop="30dp"
