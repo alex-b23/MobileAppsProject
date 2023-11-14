@@ -26,6 +26,22 @@ public class Registration extends AppCompatActivity {
     FirebaseAuth mAuth;
     TextView loginNowBtnObj;
 
+    // This checks if the User it's already signed in
+    // This code it's taken from the official Firebase docs -> https://firebase.google.com/docs/auth/android/password-auth#java_2
+    // Code was updated by me(alex) as needed for our project
+    // If the user it's already logged in, this will automatically open the Main activity
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
