@@ -46,13 +46,4 @@
         android:layout_marginTop="30dp"
         android:text="Login" />
 
-    <TextView
-        android:id="@+id/registerNowBtn"
-        android:text="Tap here to Make an Account"
-        android:textSize="15dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
 </LinearLayout>

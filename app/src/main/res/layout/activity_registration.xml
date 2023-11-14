@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_height="match_parent"
-    tools:context=".Registration"
+    tools:context=".Login"
     android:padding="20dp">
 
 
@@ -40,19 +40,10 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/registrationBtn"
+        android:id="@+id/loginBtn"
         android:layout_width="140dp"
         android:layout_height="63dp"
         android:layout_marginTop="30dp"
         android:text="Registration" />
-
-    <TextView
-        android:id="@+id/loginNowBtn"
-        android:text="Tap here to Login"
-        android:textSize="15dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>
