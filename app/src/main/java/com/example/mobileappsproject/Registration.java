@@ -3,10 +3,12 @@ package com.example.mobileappsproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +24,7 @@ public class Registration extends AppCompatActivity {
     TextInputEditText userPasswordObj;
     Button registrationBtnObj;
     FirebaseAuth mAuth;
+    TextView loginNowBtnObj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,18 @@ public class Registration extends AppCompatActivity {
         userEmailObj = findViewById(R.id.userEmail);
         userPasswordObj = findViewById(R.id.userPassword);
         registrationBtnObj = findViewById(R.id.registrationBtn);
+        loginNowBtnObj = findViewById(R.id.loginNowBtn);
+
+        // Setting up the login now button which will take the user to
+        // the login screen once the user taps on the button
+        loginNowBtnObj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         // Registration button logic
         registrationBtnObj.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +72,7 @@ public class Registration extends AppCompatActivity {
 
                 // This will create the users information for the login -
                 // Code taken from the Firebase docs -> https://firebase.google.com/docs/auth/android/password-auth#java_2
-                // The code was updates by me(alex) to work properly with out project
+                // The code was updates by me(alex) to work properly with our project
                 mAuth.createUserWithEmailAndPassword(userEmail, userPassword)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
