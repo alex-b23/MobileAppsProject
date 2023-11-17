@@ -31,9 +31,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
-        Post post = Posts.get(position);
+        Post post = Posts.get(Posts.size() - position - 1);
         holder.DisplayNameText.setText(post.DisplayName);
-        holder.UserNameText.setText("@" + post.Username);
+        holder.UserNameText.setText("@" + post.UserID);
         holder.CaptionText.setText(post.Content);
     }
 
