@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    tools:context=".Registration"
+    android:padding="20dp">
+
+
+    <TextView
+        android:text="Registration"
+        android:layout_width="match_parent"
+        android:textSize="30dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:layout_height="wrap_content" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userEmail"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:hint="Enter Your Email" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userPassword"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:hint="Enter Your Password" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/registrationBtn"
+        android:layout_width="140dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="30dp"
+        android:text="Registration" />
+
+    <TextView
+        android:id="@+id/loginNowBtn"
+        android:text="Tap here to Login"
+        android:textSize="15dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
