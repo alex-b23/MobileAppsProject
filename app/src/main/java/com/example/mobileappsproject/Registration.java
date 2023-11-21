@@ -26,21 +26,24 @@ public class Registration extends AppCompatActivity {
     FirebaseAuth mAuth;
     TextView loginNowBtnObj;
 
+    // OLD CODE -> Kept in Just in Case the New Idea Doesn't work as intended
+    /// -------------------------------------------------- //
     // This checks if the User it's already signed in
     // This code it's taken from the official Firebase docs -> https://firebase.google.com/docs/auth/android/password-auth#java_2
     // Code was updated by me(alex) as needed for our project
     // If the user it's already logged in, this will automatically open the Main activity
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }
+    // @Override
+    //public void onStart() {
+    //    super.onStart();
+    //    // Check if user is signed in (non-null) and update UI accordingly.
+    //    FirebaseUser currentUser = mAuth.getCurrentUser();
+    //    if(currentUser != null){
+    //        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+    //        startActivity(intent);
+    //        finish();
+    //    }
+    //}
+    /// -------------------------------------------------- //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +100,10 @@ public class Registration extends AppCompatActivity {
                                     // If account creation succeed, display a message to the user.
                                     Toast.makeText(Registration.this, "Account Successfully Created.",
                                             Toast.LENGTH_SHORT).show();
+
+                                    // Start UserProfileCreation activity
+                                    Intent intent = new Intent(Registration.this, UserProfileCreation.class);
+                                    startActivity(intent);
                                 } else {
                                     // If account creation fails, display a message to the user.
                                     Toast.makeText(Registration.this, "Account Creation Failed.",
