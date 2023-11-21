@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    tools:context=".Registration"
+    android:padding="20dp">
+
+
+    <TextView
+        android:text="Create Profile"
+        android:layout_width="match_parent"
+        android:textSize="30dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:layout_height="wrap_content" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userUsername"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:hint="Enter Your Username" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userDisplayName"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:hint="Enter Your Display Name" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userBio"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Enter Your Bio Name" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/createprofileButton"
+        android:layout_width="140dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="30dp"
+        android:text="Create Profile" />
+
+
+</LinearLayout>
