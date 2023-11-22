@@ -24,7 +24,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/userUsername"
             android:layout_width="match_parent"
-            android:layout_height="43dp"
+            android:layout_height="wrap_content"
             android:hint="Enter Your Username" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -34,9 +34,9 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/userDisplayName"
-            android:layout_marginTop="50dp"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             android:hint="Enter Your Display Name" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,7 +48,7 @@
             android:id="@+id/userBio"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:hint="Enter Your Bio Name" />
+            android:hint="Enter Your Bio" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
