@@ -6,12 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
@@ -108,23 +111,39 @@ public class Registration extends AppCompatActivity {
                                     // Get the UID of the newly created user
                                     String uid = mAuth.getCurrentUser().getUid();
                                     // Creating a HashMap with the UID
-                                    Map<String, Object> user = new HashMap<>();
-                                    user.put("uid", uid);
+                                    Map<String, Object> users = new HashMap<>();
+                                    users.put("uid", uid);
                                     // Get a CollectionReference where you want to store the user data
                                     CollectionReference usersRef = db.collection("users");
                                     // Save the user to the database
-                                    usersRef.document(uid).set(user);
-                                    // If account creation succeed, display a message to the user.
-                                    Toast.makeText(Registration.this, "Account Successfully Created.",
-                                            Toast.LENGTH_SHORT).show();
+                                    usersRef.document(uid).set(users)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    // If account creation succeed, display a message to the user.
+                                                    Toast.makeText(Registration.this, "Account Successfully Created.",
+                                                            Toast.LENGTH_SHORT).show();
 
-                                    // Start UserProfileCreation activity
-                                    Intent intent = new Intent(Registration.this, UserProfileCreation.class);
-                                    startActivity(intent);
+                                                    // Start UserProfileCreation activity
+                                                    Intent intent = new Intent(Registration.this, UserProfileCreation.class);
+                                                    startActivity(intent);
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    // If account creation fails, display a message to the user.
+                                                    Toast.makeText(Registration.this, "Account Creation Failed.",
+                                                            Toast.LENGTH_SHORT).show();
+                                                    Log.w("Registration", "Error adding document", e);
+                                                }
+                                            });
                                 } else {
-                                    // If account creation fails, display a message to the user.
-                                    Toast.makeText(Registration.this, "Account Creation Failed.",
+                                    // If sign in fails, display a message to the user.
+                                    Toast.makeText(Registration.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
+                                    // Log the exception
+                                    Log.w("Registration", "createUserWithEmail:failure", task.getException());
                                 }
                             }
                         });

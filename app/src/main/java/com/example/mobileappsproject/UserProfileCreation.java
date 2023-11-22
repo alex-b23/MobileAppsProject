@@ -2,6 +2,8 @@ package com.example.mobileappsproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +45,7 @@ public class UserProfileCreation extends AppCompatActivity {
                 users.put("Username", username);
                 users.put("DisplayName", displayName);
                 users.put("Bio", bio);
+                db = FirebaseFirestore.getInstance();
 
                 db.collection("users")
                         .add(users)
@@ -50,6 +53,9 @@ public class UserProfileCreation extends AppCompatActivity {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Toast.makeText(UserProfileCreation.this, "Profile Created Succesfully",Toast.LENGTH_SHORT).show();
+                                // Start UserProfileCreation activity
+                                Intent intent = new Intent(UserProfileCreation.this, MainActivity.class);
+                                startActivity(intent);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
