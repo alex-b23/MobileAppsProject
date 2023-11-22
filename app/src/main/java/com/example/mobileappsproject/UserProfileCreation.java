@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.CollectionReference;
@@ -47,12 +48,16 @@ public class UserProfileCreation extends AppCompatActivity {
                 users.put("Bio", bio);
                 db = FirebaseFirestore.getInstance();
 
-                db.collection("users")
-                        .add(users)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                // Get the UID of the current user
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                // Update the existing document with the user's UID
+                db.collection("users").document(uid)
+                        .update(users)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(UserProfileCreation.this, "Profile Created Succesfully",Toast.LENGTH_SHORT).show();
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(UserProfileCreation.this, "Profile Created Successfully",Toast.LENGTH_SHORT).show();
                                 // Start UserProfileCreation activity
                                 Intent intent = new Intent(UserProfileCreation.this, MainActivity.class);
                                 startActivity(intent);
