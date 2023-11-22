@@ -8,36 +8,28 @@
     android:orientation="vertical"
     tools:context=".CreatePostFragment">
 
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/contentTextInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        app:errorEnabled="true">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/contentTextInput"
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="240dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            app:errorEnabled="true">
+            android:hint="What do you want to say?"
+            android:maxLength="140" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="What do you want to say?"
-                android:maxLength="140" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/newPostButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginEnd="10dp"
-            android:text="New Post" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/newPostButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginEnd="10dp"
+        android:text="New Post" />
 
 </LinearLayout>
