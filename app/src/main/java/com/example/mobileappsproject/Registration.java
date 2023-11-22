@@ -17,6 +17,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Registration extends AppCompatActivity {
 
@@ -25,6 +31,7 @@ public class Registration extends AppCompatActivity {
     Button registrationBtnObj;
     FirebaseAuth mAuth;
     TextView loginNowBtnObj;
+    FirebaseFirestore db;
 
     // OLD CODE -> Kept in Just in Case the New Idea Doesn't work as intended
     /// -------------------------------------------------- //
@@ -56,7 +63,8 @@ public class Registration extends AppCompatActivity {
         userPasswordObj = findViewById(R.id.userPassword);
         registrationBtnObj = findViewById(R.id.registrationBtn);
         loginNowBtnObj = findViewById(R.id.loginNowBtn);
-
+        // setting up the Firestore
+        db = FirebaseFirestore.getInstance();
         // Setting up the login now button which will take the user to
         // the login screen once the user taps on the button
         loginNowBtnObj.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +105,15 @@ public class Registration extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
+                                    // Get the UID of the newly created user
+                                    String uid = mAuth.getCurrentUser().getUid();
+                                    // Creating a HashMap with the UID
+                                    Map<String, Object> user = new HashMap<>();
+                                    user.put("uid", uid);
+                                    // Get a CollectionReference where you want to store the user data
+                                    CollectionReference usersRef = db.collection("users");
+                                    // Save the user to the database
+                                    usersRef.document(uid).set(user);
                                     // If account creation succeed, display a message to the user.
                                     Toast.makeText(Registration.this, "Account Successfully Created.",
                                             Toast.LENGTH_SHORT).show();
