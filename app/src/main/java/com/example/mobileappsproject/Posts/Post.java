@@ -9,7 +9,6 @@ public class Post {
 
     protected static SimpleDateFormat DateFormat = new SimpleDateFormat("hh:mm:dd:MM:yyyy");
     public String PostID;
-    public String DisplayName;
     public String UserID;
     public String Content;
 
@@ -18,9 +17,8 @@ public class Post {
 
     public List<Reply> Replies;
 
-    public Post(String postId, String displayName, String userID, String content, int likeCount) {
+    public Post(String postId, String userID, String content, int likeCount) {
         PostID = postId;
-        DisplayName = displayName;
         UserID = userID;
         Content = content;
         Timestamp = DateFormat.format(new Date());

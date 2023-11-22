@@ -14,8 +14,9 @@ import com.example.mobileappsproject.R;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
-    LayoutInflater Inflator;
-    List<Post> Posts;
+    private LayoutInflater Inflator;
+    private OnClickListener onClickListener;
+    private List<Post> Posts;
 
     public PostAdapter(Context context, List<Post> posts)
     {
@@ -32,14 +33,31 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
         Post post = Posts.get(Posts.size() - position - 1);
-        holder.DisplayNameText.setText(post.DisplayName);
+        holder.DisplayNameText.setText("Test Name");
         holder.UserNameText.setText("@" + post.UserID);
         holder.CaptionText.setText(post.Content);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null) {
+                    onClickListener.onClick(position, post);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return Posts.size();
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+    public interface OnClickListener {
+        void onClick(int position, Post model);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

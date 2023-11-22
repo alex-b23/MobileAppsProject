@@ -1,13 +1,18 @@
 package com.example.mobileappsproject;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.mobileappsproject.Posts.Post;
 import com.example.mobileappsproject.Posts.PostAdapter;
@@ -19,34 +24,50 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
 
-public class PostsActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link PostsFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class PostsFragment extends Fragment {
     private PostAdapter RecyclerViewAdapter;
     private FirebaseDatabase PostsDataBase;
     private DatabaseReference PostRef;
-
     private List<Post> VisablePosts;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_posts);
-
+    public PostsFragment() {
         VisablePosts = new ArrayList<>();
-
-        RecyclerView recyclerView = findViewById(R.id.postsRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerViewAdapter = new PostAdapter(this, VisablePosts);
-        recyclerView.setAdapter(RecyclerViewAdapter);
-
         SetupDataBaseAndRef();
     }
 
-    public void onClickPost(View view)
+    public static PostsFragment newInstance() {
+        PostsFragment fragment = new PostsFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
-        Intent intent = new Intent(PostsActivity.this, NewPostActivity.class);
-        startActivity(intent);
+        super.onViewCreated(view, savedInstanceState);
+        RecyclerView recyclerView = view.findViewById(R.id.postsRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        RecyclerViewAdapter = new PostAdapter(view.getContext(), VisablePosts);
+        RecyclerViewAdapter.setOnClickListener(new PostAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, Post post) {
+                Toast.makeText(getContext(), "Clicked on post\n" + post.PostID, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        recyclerView.setAdapter(RecyclerViewAdapter);
+
     }
 
     private void SetupDataBaseAndRef()
@@ -91,16 +112,11 @@ public class PostsActivity extends AppCompatActivity {
         });
     }
 
-    private void TestDateBase()
-    {
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("posts");
-        String postId = myRef.push().getKey();
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_posts, container, false);
 
-        Post post = new Post(postId, "Derek Brandt", "derekjbr", "Hey guys I'm testing a new post!", 0);
-        post.AddReply("derekjbr","Wow this is cool");
-
-        myRef.child(postId).setValue(post);
     }
 }
