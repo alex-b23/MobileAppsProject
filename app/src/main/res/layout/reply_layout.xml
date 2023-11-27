@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="10dp">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/postCard"
@@ -19,9 +17,8 @@
             android:layout_height="wrap_content"
             android:padding="4dp">
 
-
             <TextView
-                android:id="@+id/replyPostName"
+                android:id="@+id/replyCardDisplayName"
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -36,7 +33,7 @@
                 tools:text="User Name" />
 
             <TextView
-                android:id="@+id/replyPostUsername"
+                android:id="@+id/replyCardUsername"
                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -44,11 +41,11 @@
                 android:layout_marginTop="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/replyPostName"
+                app:layout_constraintTop_toBottomOf="@id/replyCardDisplayName"
                 tools:text="\@username" />
 
             <TextView
-                android:id="@+id/replyPostCaption"
+                android:id="@+id/replyCardCaption"
                 style="@style/TextAppearance.MaterialComponents.Caption"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -59,45 +56,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/replyPostUsername"
+                app:layout_constraintTop_toBottomOf="@id/replyCardUsername"
                 app:layout_constraintVertical_bias="0.0" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/likeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:background="#00000000"
-                android:text="100"
-                android:textColor="@color/black"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:gravity="left"
-                app:icon="@drawable/outline_thumb_up_24"
-                app:iconPadding="1dp"
-                app:iconTint="@color/black"
-                app:iconGravity="textStart"
-                app:layout_constraintTop_toBottomOf="@id/replyPostCaption"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/replyButton"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:background="#00000000"
-                android:text="100"
-                android:textColor="@color/black"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:gravity="left"
-                app:icon="@drawable/outline_comment_24"
-                app:iconPadding="1dp"
-                app:iconTint="@color/black"
-                app:iconGravity="textStart"
-                app:layout_constraintTop_toBottomOf="@id/replyPostCaption"
-                app:layout_constraintStart_toEndOf="@id/likeButton" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

@@ -2,9 +2,7 @@ package com.example.mobileappsproject.Posts;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobileappsproject.R;
@@ -53,6 +52,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         // Update the reply button text to have the number of replies
         holder.ReplyButton.setText(post.NumReplies().toString());
+        // Here we are setting the button click listen of the Reply button so it will transition the fragment view to the reply fragment
+        holder.ReplyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("UserId", post.UserID);
+                bundle.putString("Caption", post.Content);
+                bundle.putString("PostId", post.PostID);
+                Navigation.findNavController(holder.itemView).navigate(R.id.replyFragment, bundle);
+            }
+        });
 
         // Update the like button to match the number of likes
         holder.LikeButton.setText(post.Likes().toString());
@@ -123,9 +133,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            DisplayNameText = itemView.findViewById(R.id.postCardDisplayName);
-            UserNameText = itemView.findViewById(R.id.postCardUsername);
-            CaptionText = itemView.findViewById(R.id.postCardCaption);
+            DisplayNameText = itemView.findViewById(R.id.replyPostName);
+            UserNameText = itemView.findViewById(R.id.replyPostUsername);
+            CaptionText = itemView.findViewById(R.id.replyPostCaption);
             LikeButton = itemView.findViewById(R.id.likeButton);
             ReplyButton = itemView.findViewById(R.id.replyButton);
         }

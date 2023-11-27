@@ -25,11 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PostsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PostsFragment extends Fragment {
     private PostAdapter RecyclerViewAdapter;
     private FirebaseDatabase PostsDataBase;
@@ -39,7 +34,6 @@ public class PostsFragment extends Fragment {
     // When creating this fragment, we want to initialize the posts array list and setup the run the database setup code
     public PostsFragment() {
         VisablePosts = new ArrayList<>();
-        SetupDataBaseAndRef();
     }
 
     public static PostsFragment newInstance() {
@@ -52,6 +46,7 @@ public class PostsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SetupDataBaseAndRef();
     }
 
     @Override
