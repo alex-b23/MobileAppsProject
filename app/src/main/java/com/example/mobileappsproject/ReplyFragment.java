@@ -8,29 +8,44 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mobileappsproject.Posts.Post;
 import com.example.mobileappsproject.Posts.ReplyAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ReplyFragment extends Fragment {
     private ReplyAdapter RecyclerViewAdapter;
-    private List<Post.Reply> VisableReplies;
-
+    private Post PostReference;
+    private List<Post.Reply> Replies;
+    private FirebaseDatabase PostsDataBase;
+    private DatabaseReference PostRef;
     private FirebaseFirestore Database = FirebaseFirestore.getInstance();
+    private FirebaseAuth MAuth = FirebaseAuth.getInstance();
+
     public ReplyFragment() {
-        VisableReplies = new ArrayList<>();
+        PostReference = new Post();
+        Replies = new ArrayList<>();
     }
     public static ReplyFragment newInstance(String param1, String param2) {
         ReplyFragment fragment = new ReplyFragment();
@@ -68,7 +83,6 @@ public class ReplyFragment extends Fragment {
 
         // Fetch the User database, the post only has a link to the user id
         DocumentReference docRef = Database.collection("users").document(userId);
-
         // Once we successfully fetch the database, we want to update the post information
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -82,15 +96,57 @@ public class ReplyFragment extends Fragment {
                 }
             }
         });
-
         captionTextview.setText(caption);
 
         // Fetch the Recycler View and set the adapter to our custom post adapter that displays replies
         RecyclerView recyclerView = view.findViewById(R.id.replyRecylerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
-        VisableReplies.add(new Post.Reply("test", "I am replying"));
-        RecyclerViewAdapter = new ReplyAdapter(view.getContext(), VisableReplies);
+        RecyclerViewAdapter = new ReplyAdapter(view.getContext(), Replies);
         recyclerView.setAdapter(RecyclerViewAdapter);
+
+        //Finally We want to set up the database
+        SetupDataBaseAndRef(postId);
+
+        // Setup reply to post button
+        Button replyToPostButton = view.findViewById(R.id.replyToPostButton);
+        TextInputLayout content = view.findViewById(R.id.contentTextInput);
+        replyToPostButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                PostReference.AddReply(MAuth.getUid(), content.getEditText().getText().toString());
+                PostRef.setValue(PostReference);
+            }
+        });
+    }
+
+    // This is the code for setting up the Realtime
+    private void SetupDataBaseAndRef(String postId)
+    {
+        // Get a reference to the database
+        PostsDataBase = FirebaseDatabase.getInstance();
+        // We make it specific to the post we want to view replies for post id
+        PostRef = PostsDataBase.getReference("posts").child(postId);
+
+        // Add in a listener that will fetch the data on the cloud
+        PostRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                PostReference = dataSnapshot.getValue(Post.class);
+                // If the post as some replies, we want to add it to our reply list
+                if(PostReference.Replies != null) {
+                    Replies.clear();
+                    for(Post.Reply reply : PostReference.Replies) {
+                        Replies.add(reply);
+                    }
+                }
+                // Tell the Recycler View that some of the data has changed and that it needs updating.
+                RecyclerViewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle potential errors
+            }
+        });
     }
 }

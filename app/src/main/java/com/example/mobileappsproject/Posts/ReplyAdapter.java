@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,7 +46,25 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ViewHolder>{
     @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull ReplyAdapter.ViewHolder holder, int position) {
+        Post.Reply reply = Replies.get(Replies.size() - 1 - position);
+        holder.CaptionText.setText(reply.Content);
 
+        // Fetch the User database, the post only has a link to the user id
+        DocumentReference docRef = Database.collection("users").document(reply.UserID);
+
+        // Once we successfully fetch the database, we want to update the post information
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        holder.DisplayNameText.setText((String)document.getData().getOrDefault("DisplayName", "Error"));
+                        holder.UsernameText.setText("@" + (String)document.getData().getOrDefault("Username", "Error"));
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -53,11 +72,15 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ViewHolder>{
         return Replies.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
-
+        TextView CaptionText;
+        TextView DisplayNameText;
+        TextView UsernameText;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            CaptionText = itemView.findViewById(R.id.replyCardCaption);
+            DisplayNameText = itemView.findViewById(R.id.replyCardDisplayName);
+            UsernameText = itemView.findViewById(R.id.replyCardUsername);
         }
     }
 }
