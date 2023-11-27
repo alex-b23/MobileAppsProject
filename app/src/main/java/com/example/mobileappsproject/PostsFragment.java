@@ -35,6 +35,8 @@ public class PostsFragment extends Fragment {
     private FirebaseDatabase PostsDataBase;
     private DatabaseReference PostRef;
     private List<Post> VisablePosts;
+
+    // When creating this fragment, we want to initialize the posts array list and setup the run the database setup code
     public PostsFragment() {
         VisablePosts = new ArrayList<>();
         SetupDataBaseAndRef();
@@ -56,9 +58,13 @@ public class PostsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+
+        // Fetch the Recycler View and set the adapter to our custom post adapter that displays posts
         RecyclerView recyclerView = view.findViewById(R.id.postsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         RecyclerViewAdapter = new PostAdapter(view.getContext(), VisablePosts);
+
+        // We then set the onclick method which will handle clicking on a post and redirecting them to the reply section
         RecyclerViewAdapter.setOnClickListener(new PostAdapter.OnClickListener() {
             @Override
             public void onClick(int position, Post post) {
@@ -70,6 +76,7 @@ public class PostsFragment extends Fragment {
 
     }
 
+    // This is the code for setting up the Realtime Database
     private void SetupDataBaseAndRef()
     {
         // Get a reference to the database
