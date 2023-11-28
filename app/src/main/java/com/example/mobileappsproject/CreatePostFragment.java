@@ -18,12 +18,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CreatePostFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CreatePostFragment extends Fragment {
     private FirebaseDatabase PostsDataBase;
     private FirebaseAuth MAuth;
@@ -33,10 +27,8 @@ public class CreatePostFragment extends Fragment {
         SetupDataBaseAndRef();
     }
 
-    public static CreatePostFragment newInstance(String param1, String param2) {
+    public static CreatePostFragment newInstance() {
         CreatePostFragment fragment = new CreatePostFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -56,23 +48,32 @@ public class CreatePostFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Here we grab the post button and setup the code to make a post
         Button newPostButton = view.findViewById(R.id.newPostButton);
         newPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
+                // We grab the text from the post
                 TextInputLayout contextText = getView().findViewById(R.id.contentTextInput);
                 String context = contextText.getEditText().getText().toString();
+
+                // We check to make sure the user hasn't been logged out / timed out
+                // the text of the user post isn't null and isn't a length of 0
+                // if it is, we let the user know through an error toast
                 if(MAuth.getCurrentUser() == null || context == null || context.length() == 0)
                 {
                     Toast.makeText(view.getContext(), "Unable to post!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                // We fetch a new post id
                 String postId = PostRef.push().getKey();
-
+                // Create a basic post
                 Post post = new Post(postId, MAuth.getUid(), context, 0);
+                // Add it to the database
                 PostRef.child(postId).setValue(post);
+                // Navigate the user back to the global posts page
                 Navigation.findNavController(v).navigate(R.id.postsFragment);
             }
         });
