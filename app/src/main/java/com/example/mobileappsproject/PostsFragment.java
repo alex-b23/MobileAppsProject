@@ -38,8 +38,6 @@ public class PostsFragment extends Fragment {
 
     public static PostsFragment newInstance() {
         PostsFragment fragment = new PostsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -90,21 +88,25 @@ public class PostsFragment extends Fragment {
                         boolean alreadyContainsPost = false;
                         for(int i = 0; i < VisablePosts.size() && !alreadyContainsPost; i++)
                         {
+                            // If we find a post that is already in the recycler view, we stop the for loop
+                            // update the post in the list and update the singular item in the recycler view
                             if(VisablePosts.get(i).PostID == post.PostID)
                             {
                                 alreadyContainsPost = true;
                                 VisablePosts.set(i, post);
+                                RecyclerViewAdapter.notifyItemChanged(i);
                             }
                         }
 
-                        // If the post doesn't already exist, we want to add it to the recycler view.
-                        if(!alreadyContainsPost)
+                        // If the post doesn't already exist, we want to add it to the recycler view
+                        // and update the last item in the RecyclerView
+                        if(!alreadyContainsPost) {
                             VisablePosts.add(post);
+                            RecyclerViewAdapter.notifyItemChanged(VisablePosts.size() - 1);
+                        }
+
                     }
                 }
-
-                // Tell the Recycler View that some of the data has changed and that it needs updating.
-                RecyclerViewAdapter.notifyDataSetChanged();
             }
 
             @Override

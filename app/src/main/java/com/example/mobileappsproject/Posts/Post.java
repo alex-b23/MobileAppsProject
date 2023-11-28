@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 
 public class Post {
-
     protected static SimpleDateFormat DateFormat = new SimpleDateFormat("hh:mm:dd:MM:yyyy");
     private static FirebaseDatabase PostsDataBase;
     private static DatabaseReference PostRef;
@@ -55,7 +54,7 @@ public class Post {
         return LikedUsers.contains(userId);
     }
     // This code will add a user to the liked users and then update the database automatically
-    public void AddLikedUser(String userId)
+    public void AddLikedUser(String userId, boolean updateDataBase)
     {
         if(LikedUsers == null)
             LikedUsers = new ArrayList<>();
@@ -63,11 +62,13 @@ public class Post {
         if(!LikedUsers.contains(userId))
             LikedUsers.add(userId);
 
-        SetupDataBaseAndRef();
-        PostRef.child(PostID).setValue(this);
+        if(updateDataBase) {
+            SetupDataBaseAndRef();
+            PostRef.child(PostID).setValue(this);
+        }
     }
     // This code will remove a user from the liked users and then update the database automatically
-    public void RemoveLikedUser(String userId)
+    public void RemoveLikedUser(String userId, boolean updateDataBase)
     {
         if(LikedUsers == null)
             LikedUsers = new ArrayList<>();
@@ -75,8 +76,22 @@ public class Post {
         if(LikedUsers.contains(userId))
             LikedUsers.remove(userId);
 
-        SetupDataBaseAndRef();
-        PostRef.child(PostID).setValue(this);
+        if(updateDataBase) {
+            SetupDataBaseAndRef();
+            PostRef.child(PostID).setValue(this);
+        }
+    }
+    // This code adds a reply to a user posts and then updates the database automatically
+    public void AddReply(String userID, String content, boolean updateDataBase)
+    {
+        if(Replies == null)
+            Replies = new ArrayList<>();
+        Replies.add(new Reply(userID, content));
+
+        if(updateDataBase) {
+            SetupDataBaseAndRef();
+            PostRef.child(PostID).setValue(this);
+        }
     }
     private void SetupDataBaseAndRef() {
         if(PostsDataBase == null || PostRef == null)
@@ -85,25 +100,15 @@ public class Post {
             PostRef = PostsDataBase.getReference("posts");
         }
     }
-    public void AddReply(String userID, String content)
-    {
-        if(Replies == null)
-            Replies = new ArrayList<>();
-
-        Replies.add(new Reply(userID, content));
-    }
 
     public static class Reply {
         public String UserID;
         public String Content;
-
         public Reply(String userId, String content) {
             UserID = userId;
             Content = content;
         }
-
         public Reply() {}
-
     }
 }
 

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mobileappsproject.Posts.Post;
 import com.example.mobileappsproject.Posts.ReplyAdapter;
@@ -47,18 +48,14 @@ public class ReplyFragment extends Fragment {
         PostReference = new Post();
         Replies = new ArrayList<>();
     }
-    public static ReplyFragment newInstance(String param1, String param2) {
+    public static ReplyFragment newInstance() {
         ReplyFragment fragment = new ReplyFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -113,8 +110,19 @@ public class ReplyFragment extends Fragment {
         replyToPostButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                PostReference.AddReply(MAuth.getUid(), content.getEditText().getText().toString());
-                PostRef.setValue(PostReference);
+                String context = content.getEditText().getText().toString();
+
+                // We check to make sure the user hasn't been logged out / timed out
+                // the text of the user reply isn't null and isn't a length of 0
+                // if it is, we let the user know through an error toast
+                if(MAuth.getCurrentUser() == null || context == null || context.length() == 0)
+                {
+                    Toast.makeText(view.getContext(), "Unable to post!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                PostReference.AddReply(MAuth.getUid(), context, true);
+                // Clear the reply fields text
+                content.getEditText().setText("");
             }
         });
     }

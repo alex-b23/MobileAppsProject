@@ -46,6 +46,9 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ViewHolder>{
     @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull ReplyAdapter.ViewHolder holder, int position) {
+        // Hide the reply until we have all of the information
+        holder.itemView.setVisibility(View.GONE);
+        // Fetch the last reply so newer replies go first
         Post.Reply reply = Replies.get(Replies.size() - 1 - position);
         holder.CaptionText.setText(reply.Content);
 
@@ -61,6 +64,8 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ViewHolder>{
                     if (document.exists()) {
                         holder.DisplayNameText.setText((String)document.getData().getOrDefault("DisplayName", "Error"));
                         holder.UsernameText.setText("@" + (String)document.getData().getOrDefault("Username", "Error"));
+                        // Reveal the reply once we have fetched the repliers information from the user database
+                        holder.itemView.setVisibility(View.VISIBLE);
                     }
                 }
             }

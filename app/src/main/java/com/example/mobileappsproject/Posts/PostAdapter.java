@@ -45,6 +45,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
+        // Hide the post to start, so we can reveal it once we have all the information
+        holder.itemView.setVisibility(View.INVISIBLE);
         // Update so newer posts are on top of the feed
         Post post = Posts.get(Posts.size() - position - 1);
         // Set the caption from what was stored in the realtime database
@@ -79,15 +81,23 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             public void onClick(View v) {
                 String userId = MAuth.getUid();
                 if(post.HasUserLiked(userId))
-                    post.RemoveLikedUser(userId);
+                    post.RemoveLikedUser(userId, true);
                 else
-                    post.AddLikedUser(MAuth.getUid());
+                    post.AddLikedUser(MAuth.getUid(), true);
+            }
+        });
+        // We add an onclick listener to the post to allow them to go to the reply
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null) {
+                    onClickListener.onClick(position, post);
+                }
             }
         });
 
         // Fetch the User database, the post only has a link to the user id
         DocumentReference docRef = Database.collection("users").document(post.UserID);
-
         // Once we successfully fetch the database, we want to update the post information
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -97,17 +107,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     if (document.exists()) {
                         holder.DisplayNameText.setText((String)document.getData().getOrDefault("DisplayName", "Error"));
                         holder.UserNameText.setText("@" + (String)document.getData().getOrDefault("Username", "Error"));
+                        // Once we have successfully retrieved all of the information with no error, we show the post to the user
+                        holder.itemView.setVisibility(View.VISIBLE);
                     }
-                }
-            }
-        });
-
-        // We add an onclick listener to the post to allow them to go to the reply
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onClickListener != null) {
-                    onClickListener.onClick(position, post);
                 }
             }
         });
