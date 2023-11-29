@@ -51,17 +51,10 @@
 
                 />
 
-            <Button
-                android:id="@+id/registrationBtn"
-                android:layout_width="140dp"
-                android:layout_height="63dp"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center"
-                android:text="Edit Profile" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/postsRecyclerView"
                 android:layout_width="match_parent"
+                android:layout_marginTop="30dp"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
