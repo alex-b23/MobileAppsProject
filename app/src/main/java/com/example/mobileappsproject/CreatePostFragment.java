@@ -70,7 +70,7 @@ public class CreatePostFragment extends Fragment {
                 // We fetch a new post id
                 String postId = PostRef.push().getKey();
                 // Create a basic post
-                Post post = new Post(postId, MAuth.getUid(), context, 0);
+                Post post = new Post(postId, MAuth.getUid(), context);
                 // Add it to the database
                 PostRef.child(postId).setValue(post);
                 // Navigate the user back to the global posts page

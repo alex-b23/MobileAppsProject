@@ -51,12 +51,10 @@ public class PostsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-
         // Fetch the Recycler View and set the adapter to our custom post adapter that displays posts
         RecyclerView recyclerView = view.findViewById(R.id.postsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         RecyclerViewAdapter = new PostAdapter(view.getContext(), VisablePosts);
-
         // We then set the onclick method which will handle clicking on a post and redirecting them to the reply section
         RecyclerViewAdapter.setOnClickListener(new PostAdapter.OnClickListener() {
             @Override
@@ -66,7 +64,6 @@ public class PostsFragment extends Fragment {
         });
 
         recyclerView.setAdapter(RecyclerViewAdapter);
-
     }
 
     // This is the code for setting up the Realtime Database

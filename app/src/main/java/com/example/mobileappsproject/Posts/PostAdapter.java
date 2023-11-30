@@ -75,6 +75,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         } else {
             holder.LikeButton.setIcon(ContextCompat.getDrawable(holder.LikeButton.getContext(),R.drawable.outline_thumb_up_24));
         }
+
         // Add an onclick listener to the like button so the user can like a post
         holder.LikeButton.setOnClickListener(new View.OnClickListener() {
             @Override

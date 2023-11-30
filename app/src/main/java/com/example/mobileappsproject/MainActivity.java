@@ -4,19 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
+import androidx.appcompat.widget.SearchView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
-
-
 public class MainActivity extends AppCompatActivity {
+    public SearchView ToolbarSearch;
     private FragmentContainerView FragmentView;
     private Button signOut;
     private FirebaseAuth mAuth;
@@ -55,6 +58,29 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+
+        // Find the search bar from the list
+        MenuItem menuItem = menu.findItem(R.id.searchFriends);
+        ToolbarSearch = (SearchView) menuItem.getActionView();
+        ToolbarSearch.setQueryHint("Search for a friend");
+
+        // When we click the search bar, we want the list of usernames to appear
+        ToolbarSearch.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(FragmentView).navigate(R.id.searchFragment);
+            }
+        });
+
+        // When close the search bar, we want to return to the post fragment
+        ToolbarSearch.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                Navigation.findNavController(FragmentView).navigate(R.id.postsFragment);
+                return false;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 

@@ -19,7 +19,7 @@ public class Post {
     public String Timestamp;
     public List<String> LikedUsers;
     public List<Reply> Replies;
-    public Post(String postId, String userID, String content, int likeCount) {
+    public Post(String postId, String userID, String content) {
         PostID = postId;
         UserID = userID;
         Content = content;
