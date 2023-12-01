@@ -37,29 +37,29 @@ public class MainActivity extends AppCompatActivity {
 
         // get the signout button and setup the authentication instanec
         mAuth = FirebaseAuth.getInstance();
-        signOut = findViewById(R.id.signOut);
-        profileBtn = findViewById(R.id.profile);
+        //signOut = findViewById(R.id.signOut);
+        //profileBtn = findViewById(R.id.profile);
 
-        profileBtn.setOnClickListener(view -> {
-            UserProfile userProfileFragment = new UserProfile();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainerView, userProfileFragment)
-                    .commit();
-        });
+        //profileBtn.setOnClickListener(view -> {
+        //    UserProfile userProfileFragment = new UserProfile();
+        //    getSupportFragmentManager()
+        //            .beginTransaction()
+        //            .replace(R.id.fragmentContainerView, userProfileFragment)
+        //            .commit();
+        //});
 
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Sign out the user
-                mAuth.signOut();
-
-                // Redirect to the Login activity
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        //signOut.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+        //        // Sign out the user
+        //        mAuth.signOut();
+        //
+        //        // Redirect to the Login activity
+        //        Intent intent = new Intent(getApplicationContext(), Login.class);
+        //        startActivity(intent);
+        //        finish();
+        //    }
+        //});
     }
 
     // Inflate the menu to fit our toolbar design
@@ -84,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
         {
             // Navigate to the create post screen
             Navigation.findNavController(FragmentView).navigate(R.id.createPostFragment);
+        } else if(id == R.id.account) {
+            // Navigate to User profile screen
+            Navigation.findNavController(FragmentView).navigate(R.id.userProfile);
+        } else if(id == R.id.settings) {
+            // Navigate to Settings screen
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         return true;
