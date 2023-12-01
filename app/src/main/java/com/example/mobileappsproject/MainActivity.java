@@ -36,9 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        signOut = findViewById(R.id.signOut);
-        profileBtn = findViewById(R.id.profile);
-
         profileBtn.setOnClickListener(view -> {
             UserProfile userProfileFragment = new UserProfile();
             getSupportFragmentManager()
@@ -47,18 +44,19 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         });
 
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Sign out the user
-                mAuth.signOut();
-
-                // Redirect to the Login activity
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        // ----> DOESN'T EXIST ANYMORE MOVED TO THE 3 DOTS <---- //
+        //signOut.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+        //        // Sign out the user
+        //        mAuth.signOut();
+        //
+        //        // Redirect to the Login activity
+        //        Intent intent = new Intent(getApplicationContext(), Login.class);
+        //        startActivity(intent);
+        //        finish();
+        //    }
+        //});
     }
 
     @Override
