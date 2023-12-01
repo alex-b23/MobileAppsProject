@@ -61,7 +61,6 @@ public class SearchFragment extends Fragment {
         UsernameAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_list_item_1, Usernames);
         ListView usernameList = view.findViewById(R.id.usernameList);
         usernameList.setAdapter(UsernameAdapter);
-
         // Setup a onlick listen so that clicking an a username in the list redirects the user
         usernameList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -70,7 +69,6 @@ public class SearchFragment extends Fragment {
                 Log.d("UsernameList", uuid);
             }
         });
-
         // Fetch all users from the database
         Database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -84,9 +82,6 @@ public class SearchFragment extends Fragment {
                         Usernames.add(username);
                     }
                     UsernameAdapter.notifyDataSetChanged();
-                    Log.d("TAG", UUIDMap.keySet().toString());
-                } else {
-                    Log.d("TAG", "Error getting documents: ", task.getException());
                 }
             }
         });

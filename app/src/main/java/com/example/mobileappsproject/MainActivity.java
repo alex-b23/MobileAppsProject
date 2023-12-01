@@ -98,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
         {
             // Navigate to the create post screen
             Navigation.findNavController(FragmentView).navigate(R.id.createPostFragment);
+        } else if(id == R.id.account)
+        {
+            
         }
 
         return true;
