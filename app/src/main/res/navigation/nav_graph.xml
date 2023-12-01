@@ -12,10 +12,18 @@
         <action
             android:id="@+id/action_postsFragment_to_createPostFragment"
             app:destination="@id/createPostFragment" />
+        <action
+            android:id="@+id/action_postsFragment_to_userProfile"
+            app:destination="@id/userProfile" />
     </fragment>
     <fragment
         android:id="@+id/createPostFragment"
         android:name="com.example.mobileappsproject.CreatePostFragment"
         android:label="fragment_create_post"
         tools:layout="@layout/fragment_create_post" />
+    <fragment
+        android:id="@+id/userProfile"
+        android:name="com.example.mobileappsproject.UserProfile"
+        android:label="fragment_user_profile"
+        tools:layout="@layout/fragment_user_profile" />
 </navigation>

@@ -36,13 +36,15 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        profileBtn.setOnClickListener(view -> {
-            UserProfile userProfileFragment = new UserProfile();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainerView, userProfileFragment)
-                    .commit();
-        });
+        // OLD CODE
+
+        //profileBtn.setOnClickListener(view -> {
+        //    UserProfile userProfileFragment = new UserProfile();
+        //    getSupportFragmentManager()
+        //            .beginTransaction()
+        //            .replace(R.id.fragmentContainerView, userProfileFragment)
+        //            .commit();
+        //});
 
         // ----> DOESN'T EXIST ANYMORE MOVED TO THE 3 DOTS <---- //
         //signOut.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +78,14 @@ public class MainActivity extends AppCompatActivity {
         } else if(id == R.id.newPostMenu)
         {
             Navigation.findNavController(FragmentView).navigate(R.id.createPostFragment);
+        } else if(id == R.id.account) {
+            // Navigate to account page
+            Navigation.findNavController(FragmentView).navigate(R.id.userProfile);
+        } else if(id == R.id.settings) {
+            // Navigate to settings page
+           Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+           startActivity(intent);
+           finish();
         }
 
         return true;
