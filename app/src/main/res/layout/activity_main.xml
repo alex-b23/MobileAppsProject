@@ -49,7 +49,8 @@
         android:id="@+id/profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="Profile"
-        tools:layout_editor_absoluteX="128dp"
-        tools:layout_editor_absoluteY="667dp" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/signOut"
+        app:layout_constraintStart_toEndOf="@+id/signOut" />
 </androidx.constraintlayout.widget.ConstraintLayout>
