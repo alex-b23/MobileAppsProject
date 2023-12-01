@@ -44,4 +44,12 @@
         android:text="Sign Out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        tools:layout_editor_absoluteX="128dp"
+        tools:layout_editor_absoluteY="667dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
