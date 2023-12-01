@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.mobileappsproject.Posts.Post;
 import com.example.mobileappsproject.Posts.PostAdapter;
@@ -51,22 +49,12 @@ public class PostsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-
         // Fetch the Recycler View and set the adapter to our custom post adapter that displays posts
-        RecyclerView recyclerView = view.findViewById(R.id.postsRecyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.userPostsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         RecyclerViewAdapter = new PostAdapter(view.getContext(), VisablePosts);
 
-        // We then set the onclick method which will handle clicking on a post and redirecting them to the reply section
-        RecyclerViewAdapter.setOnClickListener(new PostAdapter.OnClickListener() {
-            @Override
-            public void onClick(int position, Post post) {
-                Toast.makeText(getContext(), "Clicked on post\n" + post.PostID, Toast.LENGTH_SHORT).show();
-            }
-        });
-
         recyclerView.setAdapter(RecyclerViewAdapter);
-
     }
 
     // This is the code for setting up the Realtime Database

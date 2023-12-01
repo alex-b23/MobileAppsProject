@@ -6,57 +6,51 @@
     tools:context=".UserProfile"
     android:layout_gravity="center">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:padding="8dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:padding="8dp" />
 
-            <ImageView
-                android:id="@+id/profileImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@mipmap/ic_launcher"
-                android:layout_gravity="center_horizontal"
-                android:padding="8dp"
-                android:layout_marginTop="20dp"/>
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="8dp" />
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Alex"
-                android:gravity="center"
-                android:padding="8dp"
-                android:layout_marginTop="5dp" />
+        <TextView
+            android:id="@+id/bio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="8dp"
 
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="8dp"
-                android:text="alex-b-23" />
+            />
 
-            <TextView
-                android:id="@+id/bio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="this is the test for the bio to check the overall length and structure and how it will work. Lorem Ipsum bla bla bla bla bla"
-                android:padding="8dp"
-                android:layout_marginTop="20dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/usersPostsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp" />
 
-                />
+    </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/postsRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_marginTop="30dp"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-    </ScrollView>
 </FrameLayout>
