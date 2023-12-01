@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,7 +67,12 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String uuid = UUIDMap.get(Usernames.get(position));
-                Log.d("UsernameList", uuid);
+                Bundle bundle = new Bundle();
+                bundle.putString(UserProfile.USERID, uuid);
+                // Navigate to that users profile
+                Navigation.findNavController(view).navigate(R.id.userProfile, bundle);
+                // Close the search bar
+                ((MainActivity)getActivity()).ToolbarSearch.onActionViewCollapsed();
             }
         });
         // Fetch all users from the database
